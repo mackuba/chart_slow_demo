@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chart.js 3.7</title>
+
+  <script type="text/javascript">
+    function chartOptions(title) {
+      return {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: {
+          duration: 600
+        },
+        plugins: {
+          title: {
+            display: true,
+            text: title,
+            color: '#333',
+            font: {
+              size: 20,
+              style: 'normal'
+            },
+            padding: 20
+          },
+          legend: {
+            position: 'bottom',
+            labels: {
+              font: {
+                size: 14
+              }
+            }
+          },
+          tooltip: {
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          }
+        },
+        elements: {
+          point: {
+            radius: 2.5
+          },
+          line: {
+            borderJoinStyle: 'round',
+            borderWidth: 2.75,
+            tension: 0
+          },
+        },
+        scales: {
+          x: {
+            ticks: {
+              font: {
+                size: 13
+              },
+              callback: function(v) { formatDate(this.getLabelForValue(v)) }
+            }
+          },
+          y: {
+            type: 'linear',
+            beginAtZero: true,
+            min: 0,
+            ticks: {
+              font: {
+                size: 13
+              },
+              precision: 0,
+              callback: (v) => v.toLocaleString()
+            }
+          }
+        }
+      };
+    }
+
+    (async function() {
+      try {
+        let response = await fetch('https://raw.githubusercontent.com/mackuba/chart_slow_demo/master/data.json');
+        let json = await response.json();
+
+        window.coronaData = json;
+
+        if (window.codeLoaded) {
+          initChart();
+        }
+      } catch(err) {
+        console.error("Error:", err);
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js" defer></script>
+  <script type="text/javascript" src="corona.js" defer></script>
+</head>
+<body>
+  <nav>
+    <input type="checkbox" id="by_population" onchange="changeByPopulation();">
+    <label for="by_population">Per 1 mln population</label><br>
+  </nav>
+
+  <div id="chart_container">
+    <canvas id="corona_chart"></canvas>
+  </div>
+</body>
+</html>
