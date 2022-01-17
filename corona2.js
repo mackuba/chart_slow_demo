@@ -65,6 +65,62 @@ function formatDate(date) {
   return fields[0] + '/' + fields[1];
 }
 
+function chartOptions(title) {
+  return {
+    responsive: true,
+    maintainAspectRatio: false,
+    animation: {
+      duration: 600
+    },
+    title: {
+      display: true,
+      text: title,
+      fontSize: 20,
+      fontColor: '#333',
+      fontStyle: 'normal',
+      padding: 20
+    },
+    legend: {
+      position: 'bottom',
+      labels: {
+        fontSize: 14
+      }
+    },
+    elements: {
+      point: {
+        radius: 2.5
+      },
+      line: {
+        borderJoinStyle: 'round',
+        borderWidth: 2.75,
+        tension: 0
+      },
+    },
+    scales: {
+      xAxes: [{
+        ticks: {
+          fontSize: 13,
+          callback: function(v) { formatDate(v) }
+        }
+      }],
+      yAxes: [{
+        id: 'main',
+        type: 'linear',
+        ticks: {
+          beginAtZero: true,
+          min: 0,
+          fontSize: 13,
+          precision: 0,
+          callback: (v) => v.toLocaleString()
+        }
+      }]
+    },
+    tooltips: {
+      backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    }
+  };
+}
+
 window.codeLoaded = true;
 
 if (window.coronaData) {
