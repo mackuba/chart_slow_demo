@@ -8,6 +8,12 @@ const colorSet = [
 const population = { "UK": 67886011, "France": 65273511, "Italy": 60461826, "Germany": 83783942, "Spain": 46754778, "Poland": 37846611, "Ukraine": 43733762, "Netherlands": 17134872, "Czechia": 10708981, "Belgium": 11589623, "USA": 331002651, "India": 1380004385, "Turkey": 84339067, "Russia": 145934462, "Brazil": 212559417, "Peru": 32971854, "Mexico": 128932753, "Indonesia": 273523615, "Iran": 83992949, "Colombia": 50882891 }
 
 function initChart() {
+  window.timestamps = window.coronaData.dates.map(date => {
+    let fields = date.split('/').map(x => parseInt(x, 10));
+    let dateObject = new Date(2000 + fields[2], fields[0] - 1, fields[1]);
+    return dateObject.getTime();
+  });
+
   let countries = Object.keys(population);
   let datasets = countries.map((c, i) => datasetForCountry(c, i, window.coronaData.places[c]));
   let options = chartOptions(window.byPopulation ? "Daily Covid deaths per 1 mln" : "Daily Covid deaths");
@@ -17,7 +23,6 @@ function initChart() {
   window.chart = new Chart(canvas.getContext('2d'), {
     type: 'line',
     data: {
-      labels: window.coronaData.dates,
       datasets: datasets
     },
     options: options
@@ -53,7 +58,7 @@ function datasetForCountry(country, index, json) {
   return {
     label: country,
     fill: false,
-    data: values,
+    data: values.map((n, i) => ({ x: window.timestamps[i], y: n })).filter(d => d.y !== null && d.y !== undefined),
     borderColor: colorSet[index],
     pointBackgroundColor: colorSet[index],
     pointRadius: 2.75
@@ -74,7 +79,7 @@ function chartOptions(title) {
     },
     title: {
       display: true,
-      text: `${title} [v2 time]`,
+      text: `${title} [v2 timeobj]`,
       fontSize: 20,
       fontColor: '#333',
       fontStyle: 'normal',
