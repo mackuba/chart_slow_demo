@@ -75,7 +75,7 @@ function chartOptions(title) {
     plugins: {
       title: {
         display: true,
-        text: title,
+        text: `${title} [v3]`,
         color: '#333',
         font: {
           size: 20,

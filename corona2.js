@@ -74,7 +74,7 @@ function chartOptions(title) {
     },
     title: {
       display: true,
-      text: title,
+      text: `${title} [v2]`,
       fontSize: 20,
       fontColor: '#333',
       fontStyle: 'normal',
