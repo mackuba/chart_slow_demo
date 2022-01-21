@@ -56,7 +56,7 @@ function datasetForCountry(country, index, json) {
     data: values,
     borderColor: colorSet[index],
     pointBackgroundColor: colorSet[index],
-    pointRadius: 2.75
+    pointRadius: 0
   };
 }
 
@@ -75,7 +75,7 @@ function chartOptions(title) {
     plugins: {
       title: {
         display: true,
-        text: `${title} [v3]`,
+        text: `${title} [v3 no_points]`,
         color: '#333',
         font: {
           size: 20,
