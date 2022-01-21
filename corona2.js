@@ -74,7 +74,7 @@ function chartOptions(title) {
     },
     title: {
       display: true,
-      text: `${title} [v2]`,
+      text: `${title} [v2 time]`,
       fontSize: 20,
       fontColor: '#333',
       fontStyle: 'normal',
@@ -98,6 +98,14 @@ function chartOptions(title) {
     },
     scales: {
       xAxes: [{
+        type: 'time',
+        time: {
+          unit: 'month',
+          parser: 'M/d/yy',
+          displayFormats: {
+            month: 'MMM',
+          }
+        },
         ticks: {
           fontSize: 13,
           callback: function(v) { formatDate(v) }

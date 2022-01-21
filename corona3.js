@@ -75,7 +75,7 @@ function chartOptions(title) {
     plugins: {
       title: {
         display: true,
-        text: `${title} [v3]`,
+        text: `${title} [v3 time]`,
         color: '#333',
         font: {
           size: 20,
@@ -107,11 +107,18 @@ function chartOptions(title) {
     },
     scales: {
       x: {
+        type: 'timeseries',
+        time: {
+          parser: 'M/d/yy',
+          tooltipFormat: 'M/d/yy',
+          displayFormats: {
+            month: 'MMM',
+          }
+        },
         ticks: {
           font: {
             size: 13
-          },
-          callback: function(v) { formatDate(this.getLabelForValue(v)) }
+          }
         }
       },
       y: {
