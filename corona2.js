@@ -27,17 +27,17 @@ function initChart() {
 function changeByPopulation() {
   let checkbox = document.getElementById('by_population');
   window.byPopulation = checkbox.checked;
-  reloadChart();
+  reloadChart(false);
 }
 
-function reloadChart() {
+function reloadChart(animation) {
   let chart = window.chart;
 
   let countries = Object.keys(population);
   chart.data.datasets = countries.map((c, i) => datasetForCountry(c, i, window.coronaData.places[c]));
   chart.options = chartOptions(window.byPopulation ? "Daily Covid deaths per 1 mln" : "Daily Covid deaths");
 
-  chart.update();
+  chart.update(animation ? undefined : { duration: 0 });
 }
 
 function datasetForCountry(country, index, json) {
@@ -74,7 +74,7 @@ function chartOptions(title) {
     },
     title: {
       display: true,
-      text: `${title} [v2]`,
+      text: `${title} [v2 no_anim]`,
       fontSize: 20,
       fontColor: '#333',
       fontStyle: 'normal',
